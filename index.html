@@ -29,33 +29,54 @@
 
 
     </div>
+
+    <footer>
+        <div class="clearfix container-fluid">
+            <span class="float-right">&copy;PSO Co. 2020</span>
+        </div>  
+    </footer>
+
+
+    <script>
+        $.get("/api/tables",function (data) {
+            console.log(data)
+            function render(data,i){
+             const block = `<div class="card border-dark mb-3">
+                    <div class="card-header">Resevation ${i}<span><button class="btn btn-secondary btn-md cancelbtn" id="${i}">Cancel Booking</button></span></div>
+                    <div class="card-body text-dark">
+                      <h5 class="card-title">Booked By: ${data.name}</h5>
+                      <p class="card-text">Phone: ${data.phoneNumber}</p>
+                      <p class="card-text">Email: ${data.email}</p>
+                      <p class="card-text">Unique ID: ${data.uniqueId}</p>
+                    </div>
+                  </div>`
+                  return block
+            }
+            let i = 1;
+            data.forEach(element => {
+                const booktable = render(element,i);
+                $('#start').append(booktable);
+                i++
+                
+            });
+        
+        })
+        $("body").on("click",".cancelbtn",function(){
+            let btnid = $(this).attr("id") - 1;
+            console.log(btnid);
+        $.post("/api/cancel",btnid,function(data){
+            if(data){
+                alert("Your Reservation has been Cancelled.");
+                location.reload()
+            }else{
+                alert("Call the Restaurant.")
+            }
+        })
+        })
+        
+        </script>
 </body>
 
-<script>
-$.get("/api/tables",function (data) {
-    console.log(data)
-    function render(data,i){
-     const block = `<div class="card border-dark mb-3">
-            <div class="card-header">Table ${i}</div>
-            <div class="card-body text-dark">
-              <h5 class="card-title">Booked By: ${data.name}</h5>
-              <p class="card-text">Phone: ${data.phoneNumber}</p>
-              <p class="card-text">Email: ${data.email}</p>
-              <p class="card-text">Unique ID: ${data.uniqueId}</p>
-            </div>
-          </div>`
-          return block
-    }
-    let i = 1;
-    data.forEach(element => {
-        const booktable = render(element,i);
-        $('#start').append(booktable);
-        i++
-        
-    });
 
-})
-
-</script>
 
 </html>

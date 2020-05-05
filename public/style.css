@@ -14,11 +14,25 @@ a.btn{
     box-shadow: 0px 0px 4px 2px grey;
 
 }
+.cancelbtn{
+    float: right;
+}
+.card-header{
+    font-size: 20px;
+    font-weight: bold;
 
+}
 .reserveHeading {
     padding: 1rem;
 }
 
 .hidden {
     display: none;
+}
+footer{
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+    
 }
